@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.jetbrains</groupId>
-    <artifactId>java_interpreter</artifactId>
+    <artifactId>java_interpreter_backend</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>java_interpreter</name>
     <description>java_interpreter</description>
