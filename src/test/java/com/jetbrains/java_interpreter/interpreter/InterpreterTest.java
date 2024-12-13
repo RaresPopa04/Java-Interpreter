@@ -1,5 +1,6 @@
 package com.jetbrains.java_interpreter.interpreter;
 
+import com.jetbrains.java_interpreter.classes.CompiledResult;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,7 +26,7 @@ public class InterpreterTest {
                     x = 1
                     print x
                 """;
-        assertThat(interpreterService.interpret(program)).isEqualTo("1\n");
+        assertThat(interpreterService.interpret(program)).isEqualTo(CompiledResult.builder().result("1\n").build());
     }
 
     @Test
@@ -35,7 +36,7 @@ public class InterpreterTest {
                     y = x
                     print y
                 """;
-        assertThat(interpreterService.interpret(program)).isEqualTo("1\n");
+        assertThat(interpreterService.interpret(program)).isEqualTo(CompiledResult.builder().result("1\n").build());
     }
 
     @Test
@@ -43,7 +44,7 @@ public class InterpreterTest {
         String program = """
                     print x
                 """;
-        assertThat(interpreterService.interpret(program)).isEqualTo("null\n");
+        assertThat(interpreterService.interpret(program)).isEqualTo(CompiledResult.builder().result("null\n").build());
     }
 
     @Test
@@ -52,12 +53,12 @@ public class InterpreterTest {
                     x = 1
                     print x
                 """;
-        assertThat(interpreterService.interpret(program)).isEqualTo("1\n");
+        assertThat(interpreterService.interpret(program)).isEqualTo(CompiledResult.builder().result("1\n").build());
 
         String secondProgram = """
                     print x
                 """;
-        assertThat(interpreterService.interpret(secondProgram)).isEqualTo("null\n");
+        assertThat(interpreterService.interpret(secondProgram)).isEqualTo(CompiledResult.builder().result("null\n").build());
     }
 
     @Test
@@ -79,6 +80,6 @@ public class InterpreterTest {
                     }
                     print x
                 """;
-        assertThat(interpreterService.interpret(program)).isEqualTo("1\n2\n3\n3\n2\nnull\n1\n");
+        assertThat(interpreterService.interpret(program)).isEqualTo(CompiledResult.builder().result("1\n2\n3\n3\n2\nnull\n1\n").build());
     }
 }

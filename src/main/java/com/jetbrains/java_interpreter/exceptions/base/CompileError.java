@@ -17,6 +17,10 @@ public abstract class CompileError {
         this.errorType = errorType;
     }
 
+    public String getErrorMessage(){
+        return errorType.errorMessage + " at line " + lineNumber + ": " + errorContext;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
