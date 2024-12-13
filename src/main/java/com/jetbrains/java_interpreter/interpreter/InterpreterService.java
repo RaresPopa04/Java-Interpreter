@@ -1,5 +1,6 @@
 package com.jetbrains.java_interpreter.interpreter;
 
+import com.jetbrains.java_interpreter.classes.CompiledResult;
 import com.jetbrains.java_interpreter.classes.Scope;
 import com.jetbrains.java_interpreter.exceptions.base.CompileError;
 import org.springframework.stereotype.Service;
@@ -79,16 +80,17 @@ public class InterpreterService {
         return compilerResult.toString();
     }
 
-    public String interpret(String program) {
+    public CompiledResult interpret(String program) {
         List<CompileError> compileErrorList = validateSyntax(program);
         if (!compileErrorList.isEmpty()) {
-            return compileErrorList.stream()
-                    .map(error -> "msg")
+            String compileErrorListToString = compileErrorList.stream()
+                    .map(CompileError::getErrorMessage)
                     .collect(Collectors.joining("\n"));
+            return new CompiledResult(compileErrorListToString, true);
         }
         String result = parseProgram(program);
         cleanScope();
-        return result;
+        return new CompiledResult(result);
     }
 
 

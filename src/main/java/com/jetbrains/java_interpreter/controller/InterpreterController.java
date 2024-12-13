@@ -1,14 +1,14 @@
 package com.jetbrains.java_interpreter.controller;
 
+import com.jetbrains.java_interpreter.classes.CodeRequest;
+import com.jetbrains.java_interpreter.classes.CompiledResult;
 import com.jetbrains.java_interpreter.interpreter.InterpreterService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = "http://localhost:3000")
 public class InterpreterController {
 
     private final InterpreterService interpreterService;
@@ -19,8 +19,11 @@ public class InterpreterController {
 
 
     @PostMapping("/interpret")
-    public ResponseEntity<String> interpret(@RequestBody String code) {
-        interpreterService.interpret(code);
-        return null;
+    public ResponseEntity<CompiledResult> interpret(@RequestBody CodeRequest codeRequest) {
+        CompiledResult compiledResult = interpreterService.interpret(codeRequest.code());
+        if(compiledResult.isHasError()) {
+            return ResponseEntity.badRequest().body(compiledResult);
+        }
+        return ResponseEntity.ok(compiledResult);
     }
 }
